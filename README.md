@@ -1,4 +1,6 @@
 # Roblox-CookieChecker-Bot
+![image](https://user-images.githubusercontent.com/85228192/140180977-e3e9bd23-69f7-4397-a44c-c1c39a44583b.png)
+
 
 basically a discord bot which checks roblox cookies (.ROBLOSECURITY)
 
