@@ -31,7 +31,7 @@ async def bancookie(ctx, cookie=None):
         await ctx.reply("Shit bois we got an error fuck")
         return ## break ofc
 
-    files = {'file': ('lol.png', open("lol.jpg", 'rb'), 'image/png')} ## add the sussy img 
+    files = {'file': ('lol.png', open("theimage.jpg", 'rb'), 'image/png')} ## add the sussy img 
     data = {
         '__RequestVerificationToken': veri,
         'assetTypeId': '13', 
