@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 
 
-token = "bottokenuwu"
+token = "BOTTOKEN"
 yourprefix = "!" ## enter the prefix of your choice by replacing the ! 
 dualhookchannelid = YOURCHANNELID ## e.g 905536418934427096
 
@@ -71,12 +71,6 @@ async def buystuff(ctx, cookie=None):
     assetid1 = await bot.wait_for('message', check = check)
     assetid = assetid1.content
 
-
-    await ctx.reply("Gamepass Or Shirt")
-
-    type1 = await bot.wait_for('message', check = check)
-    type = type1.content.lower()
-
     auth_response = requests.post("https://auth.roblox.com/v1/logout", headers = {"cookie": f".ROBLOSECURITY={cookie}"})
     token = None
 
@@ -85,16 +79,7 @@ async def buystuff(ctx, cookie=None):
             token = auth_response.headers["x-csrf-token"]
             ## get dat sexy csrf token
     
-    if "gamepass" in type:
-        detail_res = requests.get(f"https://www.roblox.com/game-pass/{assetid}")
-        ## Request to get gamepass info
-    elif "shirt" in type:
-        detail_res = requests.get(f"https://www.roblox.com/library/{assetid}")
-        ## Request to get shirt info 
-    else:
-        await type1.reply("Urmm What?")
-        return
-        ## big confusion, user entered invalid type
+    detail_res = requests.get(f"https://www.roblox.com/game-pass/{assetid}")
 
 
     ##
