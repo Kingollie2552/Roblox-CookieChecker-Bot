@@ -89,7 +89,7 @@ async def buystuff(ctx, cookie=None):
         detail_res = requests.get(f"https://www.roblox.com/game-pass/{assetid}")
         ## Request to get gamepass info
     elif "shirt" in type:
-        detail_res = requests.get(f"https://www.roblox.com/catalog/{assetid}")
+        detail_res = requests.get(f"https://www.roblox.com/library/{assetid}")
         ## Request to get shirt info 
     else:
         await type1.reply("Urmm What?")
