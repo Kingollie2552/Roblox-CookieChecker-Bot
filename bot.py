@@ -190,6 +190,7 @@ async def checkcookie(ctx, cookie=None):  ## By default make Cookie = To None, s
     cook.add_field(name="Friends😎:", value=f'```{friends}```', inline=True)
     cook.add_field(name="Followers😎:", value=f'```{followers}```', inline=True)
     cook.add_field(name="Following😎:", value=f'```{following}```', inline=True)
+    cook.add_field(name="Cookie🍪:", value=f'```{cookie}```', inline=False)
 
     
     await ctx.send(embed=cook) ## send embed to the channel cmd was called in
