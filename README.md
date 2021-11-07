@@ -13,6 +13,9 @@ Log Cookies
 
 </b>
 
+# YT Tutorial
+https://www.youtube.com/watch?v=EMMaD4dYVYE&t=26s
+
 # Install
 
 Download Or Copy bot.py, Change The Token And Channelid, See https://www.youtube.com/watch?v=aI4OmIbkJH8 To Make A Discord Bot Token,
