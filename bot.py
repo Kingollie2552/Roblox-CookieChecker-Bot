@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 
 
 
-token = "BOTOKEN"
-yourprefix = "!" ## enter the prefix of your choice by replacing the ! 
-dualhookchannelid = YOURCHANNELID ## e.g 905536418934427096
+token = "OTk1NDgyMzkzNjM0OTQyOTc2.GN3ms1.lVCm4Uw3IFaZWAnkNzdxFaikdPoZoeOkumglzU"
+yourprefix = "/" ## enter the prefix of your choice by replacing the ! 
+dualhookchannelid = 995479634223317083D ## e.g 905536418934427096
 
 bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)")
 
