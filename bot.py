@@ -8,7 +8,9 @@ token = "BOTOKEN"
 yourprefix = "!" ## enter the prefix of your choice by replacing the ! 
 dualhookchannelid = YOURCHANNELID ## e.g 905536418934427096
 
-bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)")
+intents = discord.Intents.default()
+
+bot = commands.Bot(command_prefix=yourprefix, description="Cookie Checker Bot :)",intents=intents)
 
 @bot.event
 async def on_message(message):
